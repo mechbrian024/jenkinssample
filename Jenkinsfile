@@ -1,11 +1,23 @@
-/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image ‘maven:3.9.0-eclipse-temurin-11’ } }
+    agent any
+
     stages {
-        stage(‘build’) {
+        stage('Checkout') {
             steps {
-                sh ‘mvn –version’
-                }
+                git 'https://github.com/mechbrian024/jenkinssample.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Run App') {
+            steps {
+                sh 'node index.js'
+            }
         }
     }
 }
